@@ -48,24 +48,28 @@ class DBHelper {
    */
    //Changed usage of XHR objec to using Fetch.
    //Default HTTP method for Fetch request is GET method
-   
+
       static fetchRestaurants(callback) {
 
-        fetch(DBHelper.DATABASE_URL)
-        .then(response => response.json())
-        .then(restaurants =>
+        fetch(DBHelper.DATABASE_URL) //grabs data from http://localhost:1337/restaurants
+        .then(response => response.json()) //reads and parses data using json()
+        //.then(response => console.log(response.json())) //successfully grabbing data
+        .then(restaurants => //promise where we indicate what to do with the data
           {
+            //console.log('TEST:', restaurants);
             dbPromise.then(db => {
-              const tx = db.transaction('restaurants', 'readwrite');
-              const store = tx.objectStore('restaurants');
-              restaurants.forEach(restaurant => {
-                store.add(restaurant);
+              const tx = db.transaction('restaurants', 'readwrite'); //create a transaction
+              const store = tx.objectStore('restaurants'); //store objectStore
+              restaurants.forEach(restaurant => {  //loop through the data
+                store.add(restaurant); //add data to db
               });
-              return tx.complete;
+               return tx.complete; //verifies transaction successfully completed
             });
+            //Callback functions allow functions to use other functions within parameters
+            //So they can be executed after the current function has finished
             callback(null, restaurants);
           })
-        .catch(error => {
+        .catch(error => {//handles error messages
         const errorMessage = (`Request FAILED. Returned status of ${error.statusText}`);
         callback(errorMessage, null);
       });
