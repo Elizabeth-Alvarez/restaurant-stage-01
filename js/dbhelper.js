@@ -1,6 +1,37 @@
 /**
  * Common database helper functions.
  */
+var idbApp = (function() {
+  'use strict';
+ //Check to see if IndexedDB is supported by browser
+ if(!('indexedDB' in window)) {
+   console.log('This browser doesn\'t support IndexedDB');
+   return;
+ }
+
+ //Create Database called 'restaurantDB'
+ const dbPromise = idb.open('restaurantDB', 3, upgradeDB => {
+   //switch cases created to update DB
+   console.log('Creates a restaurant database');
+   switch (upgradeDB.oldVersion) {
+     case 0:
+
+     case 1:
+     console.log('Creates an object store');
+     upgradeDB.createObjectStore('restaurants', {keyPath: 'id'});
+
+     /*
+     case 2:
+     console.log('Creates a name index');
+     var store = upgradeDB.transaction.objectStore('restaurants');
+     store.createIndex('name', 'name');
+     */
+
+   } //Closes switch statement
+ }); //End of idb.open function
+})(); //End of idbApp function
+
+
 class DBHelper {
 
   /**
@@ -8,29 +39,49 @@ class DBHelper {
    * Change this to restaurants.json file location on your server.
    */
   static get DATABASE_URL() {
-    const port = 8887 // Change this to your server port
-    //return `http://localhost:${port}/data/restaurants.json`;
-    return `http://127.0.0.1:${port}/data/restaurants.json`;
+    const port = 1337;
+    return `http://localhost:${port}/restaurants`;
+    //http://localhost:1337/restaurants/{3}
   }
-
   /**
    * Fetch all restaurants.
    */
-  static fetchRestaurants(callback) {
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET', DBHelper.DATABASE_URL);
-    xhr.onload = () => {
-      if (xhr.status === 200) { // Got a success response from server!
-        const json = JSON.parse(xhr.responseText);
-        const restaurants = json.restaurants;
-        callback(null, restaurants);
-      } else { // Oops!. Got an error from server.
-        const error = (`Request failed. Returned status of ${xhr.status}`);
-        callback(error, null);
-      }
-    };
-    xhr.send();
-  }
+   //Changed usage of XHR objec to using Fetch.
+   //Default HTTP method for Fetch request is GET method
+   
+      static fetchRestaurants(callback) {
+
+        fetch(DBHelper.DATABASE_URL)
+        .then(response => response.json())
+        .then(restaurants =>
+          {
+            dbPromise.then(db => {
+              const tx = db.transaction('restaurants', 'readwrite');
+              const store = tx.objectStore('restaurants');
+              restaurants.forEach(restaurant => {
+                store.add(restaurant);
+              });
+              return tx.complete;
+            });
+            callback(null, restaurants);
+          })
+        .catch(error => {
+        const errorMessage = (`Request FAILED. Returned status of ${error.statusText}`);
+        callback(errorMessage, null);
+      });
+
+    }//End of fetch function
+
+/*
+   static fetchRestaurants(callback) {
+     fetch(DBHelper.DATABASE_URL)
+     .then(response => response.json())
+     .then(restaurants => callback(null, restaurants))
+     .catch(error => {
+     const errorMessage = (`Request failed. Returned status of ${error.statusText}`);
+     callback(errorMessage, null);
+   });
+ }*/
 
   /**
    * Fetch a restaurant by its ID.
@@ -151,7 +202,10 @@ class DBHelper {
    * Restaurant image URL.
    */
   static imageUrlForRestaurant(restaurant) {
-    return (`/img/${restaurant.photograph}`);
+    if(restaurant.photograph) {
+      return `/img/${restaurant.photograph}.jpg`;
+    }
+    return (`/img/${restaurant.id}.jpg`);
   }
 
   /**
@@ -175,4 +229,4 @@ class DBHelper {
     return marker;
   }
 
-}
+} //End of DBHelper class

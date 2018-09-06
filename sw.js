@@ -1,6 +1,6 @@
 //Installing event to cache specific files
 
-  var restaurant_cache = 'mws-restaurant-part02';
+  var restaurant_cache = 'mws-restaurant-part03';
 
   var urlToCache = [
     "/",
@@ -10,6 +10,7 @@
     "/data/restaurants.json",
     "/js/",
     "/js/dbhelper.js",
+    "/js/idb.js",
     "/js/main.js",
     "/js/register.js",
     "/js/restaurant_info.js"

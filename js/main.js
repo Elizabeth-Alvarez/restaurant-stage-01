@@ -18,7 +18,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
 fetchNeighborhoods = () => {
   DBHelper.fetchNeighborhoods((error, neighborhoods) => {
     if (error) { // Got an error
-      console.error(error);
+      //console.error(error);
+      console.log(error);
     } else {
       self.neighborhoods = neighborhoods;
       fillNeighborhoodsHTML();
@@ -46,7 +47,8 @@ fillNeighborhoodsHTML = (neighborhoods = self.neighborhoods) => {
 fetchCuisines = () => {
   DBHelper.fetchCuisines((error, cuisines) => {
     if (error) { // Got an error!
-      console.error(error);
+      //console.error(error);
+      console.log(error);
     } else {
       self.cuisines = cuisines;
       fillCuisinesHTML();
@@ -100,7 +102,8 @@ updateRestaurants = () => {
 
   DBHelper.fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood, (error, restaurants) => {
     if (error) { // Got an error!
-      console.error(error);
+      //console.error(error);
+      console.log(error);
     } else {
       resetRestaurants(restaurants);
       fillRestaurantsHTML();
@@ -143,6 +146,7 @@ createRestaurantHTML = (restaurant) => {
   const image = document.createElement('img');
   image.className = 'restaurant-img';
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  //image.setAttribute('alt', DBHelper.imageAltForRestaurant(restaurant));
   image.alt = DBHelper.imageAltForRestaurant(restaurant);
   li.append(image);
 
