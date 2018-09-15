@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="css/styles.css">
   <script src='https://api.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.js'></script>
   <link href='https://api.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.css' rel='stylesheet' />
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#ef9c02">
 
   <script type="application/javascript" src="js/register.js"></script>
   <script type="application/javascript" charset="utf-8" src="js/idb.js"></script>
@@ -22,7 +24,7 @@
   </header>
 
   <main id="maincontent">
-    <section id="map-container" aria-labelledby="google-maps" role="application" aria-hidden="false">
+    <section id="map-container" aria-label="Google Maps with restaurant selection" role="application" aria-hidden="false">
       <div id="map"></div>
     </section>
     <span id="google-maps">Google map restaurant pins</span>
@@ -42,12 +44,12 @@
     <section>
       <div class="filter-options">
         <h2>Filter Results</h2>
-        <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()" role="listbox" aria-labelledby="neighborhood-label">
-          <option value="all">All Neighborhoods</option>
+        <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()" role="listbox" aria-label="neighborhood">
+          <option value="all" aria-label="neighborhood-select">All Neighborhoods</option>
           <label id="neighborhood-label">Choose between three neighborhoods</label>
         </select>
-        <select id="cuisines-select" name="cuisines" onchange="updateRestaurants()" role="listbox" aria-labelledby="cuisine-label">
-          <option value="all">All Cuisines</option>
+        <select id="cuisines-select" name="cuisines" onchange="updateRestaurants()" role="listbox" aria-label="cuisine">
+          <option value="all" aria-label="cuisine-select">All Cuisines</option>
           <label id="cuisine-label">Choose between five cuisines</label>
         </select>
       </div>
@@ -57,7 +59,7 @@
 
   <script type="application/javascript" charset="utf-8" src="js/dbhelper.js"></script>
   <script type="application/javascript" charset="utf-8" src="js/main.js"></script>
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAztjRv0BoOcA3UfYfNiBBftnrADdH8aFU&libraries=places&callback=initMap"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAztjRv0BoOcA3UfYfNiBBftnrADdH8aFU&libraries=places&callback=initMap" alt="Google maps"></script>
 
 
   <footer id="footer">

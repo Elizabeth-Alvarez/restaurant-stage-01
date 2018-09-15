@@ -1,6 +1,7 @@
 /**
  * Common database helper functions.
  */
+var dbPromise = null;
 var idbApp = (function() {
   'use strict';
  //Check to see if IndexedDB is supported by browser
@@ -10,7 +11,7 @@ var idbApp = (function() {
  }
 
  //Create Database called 'restaurantDB'
- const dbPromise = idb.open('restaurantDB', 3, upgradeDB => {
+  dbPromise = idb.open('restaurantDB', 3, upgradeDB => {
    //switch cases created to update DB
    console.log('Creates a restaurant database');
    switch (upgradeDB.oldVersion) {
@@ -56,12 +57,11 @@ class DBHelper {
         //.then(response => console.log(response.json())) //successfully grabbing data
         .then(restaurants => //promise where we indicate what to do with the data
           {
-            //console.log('TEST:', restaurants);
             dbPromise.then(db => {
               const tx = db.transaction('restaurants', 'readwrite'); //create a transaction
               const store = tx.objectStore('restaurants'); //store objectStore
               restaurants.forEach(restaurant => {  //loop through the data
-                store.add(restaurant); //add data to db
+                store.put(restaurant); //add data to db
               });
                return tx.complete; //verifies transaction successfully completed
             });
@@ -206,6 +206,7 @@ class DBHelper {
    * Restaurant image URL.
    */
   static imageUrlForRestaurant(restaurant) {
+    //return `(/img/${restaurant.id}`);
     if(restaurant.photograph) {
       return `/img/${restaurant.photograph}.jpg`;
     }
@@ -216,7 +217,7 @@ class DBHelper {
   * Restaurant image alt url
   */
   static imageAltForRestaurant(restaurant) {
-    return (`${restaurant.alt}`);
+    return (`${restaurant.name}`);
   }
 
   /**
