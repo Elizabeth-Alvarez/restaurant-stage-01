@@ -1,5 +1,45 @@
 #### Elizabeth comments
 
+Stage 02 - Udacity Instructions:
+
+- Fork and clone the server repository. You’ll use this development server to develop your project code.
+- Change the data source for your restaurant requests to pull JSON from the server, parse the response and use the response to generate the site UI.
+- Cache the JSON responses for offline use by using the IndexedDB API.
+- Follow the recommendations provided by Lighthouse to achieve the required performance targets.
+
+
+I used the following two resources to really understand how to use the IndexedDB API with promises. Went through the lab step by step to ensure I can perform the basic CRUD functions in the database.
+
+Working with IndexedDB
+https://developers.google.com/web/ilt/pwa/working-with-indexeddb#working_with_data
+
+Lab: IndexedDB
+https://developers.google.com/web/ilt/pwa/lab-indexeddb
+
+
+I also used the following webinar as a guidance to how I should approach this project.  
+
+Doug Brown [Project Coach]
+https://www.youtube.com/watch?v=Q2CJYf_XA58&feature=youtu.be
+
+
+Other Resources:
+
+The Wed App Manifest
+https://developers.google.com/web/fundamentals/web-app-manifest/
+
+jakearchibald/idb
+https://github.com/jakearchibald/idb
+
+Google Chrome DevTools  
+
+Slack Channel students
+
+
+
+-------------------------------------------------------------------------------------------------------------
+STAGE 01
+
 The main issue I had with this project was the service worker. After looking at tutorial after tutorial, the
 following is what helped me reach ultimate success:
 
