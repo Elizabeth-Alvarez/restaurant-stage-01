@@ -31,6 +31,12 @@ https://developers.google.com/web/fundamentals/web-app-manifest/
 jakearchibald/idb
 https://github.com/jakearchibald/idb
 
+Lazy Loading Images and Video
+https://developers.google.com/web/fundamentals/performance/lazy-loading-guidance/images-and-video/
+
+aFarkas/lazysizes
+https://github.com/aFarkas/lazysizes
+
 Google Chrome DevTools  
 
 Slack Channel students

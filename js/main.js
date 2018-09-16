@@ -144,15 +144,16 @@ createRestaurantHTML = (restaurant) => {
   const li = document.createElement('li');
 
   const image = document.createElement('img');
-  image.className = 'restaurant-img';
+  image.className = 'lazyload restaurant-img';
   //image.src = DBHelper.imageUrlForRestaurant(restaurant);
   image.setAttribute('alt', DBHelper.imageAltForRestaurant(restaurant));
   //image.alt = DBHelper.imageAltForRestaurant(restaurant);
-  image.src = `/img/${restaurant.id}_small.jpg`;
-  image.setAttribute('srcset', `/img/${restaurant.id}_small.jpg, /img/${restaurant.id}_reg.jpg`);
-
+  //image.src = `/img/${restaurant.id}_small.jpg`;
+  //image.srcset =  `/img/${restaurant.id}_small.jpg, /img/${restaurant.id}_reg.jpg`;
+  image.setAttribute('data-src', `/img/${restaurant.id}_small.jpg`);
+  image.setAttribute('data-srcset', `/img/${restaurant.id}_small.jpg, /img/${restaurant.id}_reg.jpg`);
+  image.setAttribute('data-sizes', 'auto');
   li.append(image);
-
 
   const name = document.createElement('h1');
   name.innerHTML = restaurant.name;
